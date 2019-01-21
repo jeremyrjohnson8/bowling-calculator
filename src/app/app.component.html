@@ -11,7 +11,7 @@
 
 </div>
 <div class="frame-entry-container">
-  <div *ngFor="let frame of this.bowl.frames" class="frame-entry-wrapper">
+  <div *ngFor="let frame of this.bowlingRound.frames" class="frame-entry-wrapper">
     <label class="frame-number">{{ frame.currentFrame }}</label>
     <div class="frame-score">
         {{frame.firstRoll | number}}
@@ -25,14 +25,14 @@
   </div>
   <div class="frame-entry-wrapper">
     <label>Total</label>
-    <div *ngIf=this.bowl>
-      {{ this.bowl.getTotalScore | number}}
+    <div *ngIf=this.bowlingRound>
+      {{ this.bowlingRound.getTotalScore | number}}
     </div>
   </div>
 </div>
 
-<div *ngIf="this.bowl.pinOptions" class="pin-button-container">
-  <button [disabled]="pinOption.isDisabled" *ngFor="let pinOption of this.bowl.pinOptions" class="pin-button" (click)="roll(pinOption._value)">
+<div *ngIf="this.bowlingRound.pinOptions" class="pin-button-container">
+  <button [disabled]="pinOption.isDisabled" *ngFor="let pinOption of this.bowlingRound.pinOptions" class="pin-button" (click)="roll(pinOption._value)">
     <label >{{ pinOption._label }}</label>
   </button>
 

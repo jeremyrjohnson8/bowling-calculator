@@ -40,7 +40,7 @@ describe('AppComponent', () => {
 
     it('should reset current total to 0 when clear is called', async(() => {
       appComponent.clear();
-      expect(appComponent.bowl.getTotalScore).toBe(0, 'because we have reset the game');
+      expect(appComponent.bowlingRound.getTotalScore).toBe(0, 'because we have reset the game');
     }));
 
     it('should set isFirstRoll to true', async(() => {
@@ -50,9 +50,9 @@ describe('AppComponent', () => {
 
     it('should create a new bolwing round object', async(() => {
       appComponent.clear();
-      expect(appComponent.bowl).toBeDefined('because we have created an object for a new round');
-      expect(appComponent.bowl.frames).toBeDefined('because we have created an object for a new round, which creates new frames');
-      expect(appComponent.bowl.pinOptions).toBeDefined('because we have created an object for a new round, which creates new pinoptions array');
+      expect(appComponent.bowlingRound).toBeDefined('because we have created an object for a new round');
+      expect(appComponent.bowlingRound.frames).toBeDefined('because we have created an object for a new round, which creates new frames');
+      expect(appComponent.bowlingRound.pinOptions).toBeDefined('because we have created an object for a new round, which creates new pinoptions array');
     }));
   });
 
@@ -65,19 +65,19 @@ describe('AppComponent', () => {
 
     it('should set first roll of first frame to 5', async(() => {
       appComponent.roll(5);
-      expect(appComponent.bowl.frames[0].firstRoll).toBe(5, 'because we rolled a 5 for our first roll of the first frame');
+      expect(appComponent.bowlingRound.frames[0].firstRoll).toBe(5, 'because we rolled a 5 for our first roll of the first frame');
     }));
 
     it('should set second roll of first frame to 3', async(() => {
       appComponent.isFirstRoll = false;
       appComponent.roll(3);
-      expect(appComponent.bowl.frames[0].secondRoll).toBe(3, 'because we rolled a 3 for our first roll of the first frame');
+      expect(appComponent.bowlingRound.frames[0].secondRoll).toBe(3, 'because we rolled a 3 for our first roll of the first frame');
     }));
 
     it('should set second roll of first frame to 3', async(() => {
       appComponent.isFirstRoll = false;
       appComponent.roll(3);
-      expect(appComponent.bowl.frames[0].secondRoll).toBe(3, 'because we rolled a 3 for our first roll of the first frame');
+      expect(appComponent.bowlingRound.frames[0].secondRoll).toBe(3, 'because we rolled a 3 for our first roll of the first frame');
     }));
 
     it('should call handleTenthFrame', async(() => {
@@ -114,7 +114,7 @@ describe('AppComponent', () => {
   describe('setFirstRoll', () => {
     it('should set first roll of current frame to the number of pins knocked down', async(() => {
       appComponent.setFirstRoll(9);
-      expect(appComponent.bowl.frames[0].firstRoll).toBe(9);
+      expect(appComponent.bowlingRound.frames[0].firstRoll).toBe(9);
     }));
 
     it('should set isFirstRoll to false after first roll is finished', async(() => {
@@ -127,7 +127,7 @@ describe('AppComponent', () => {
     it('should set second roll of current frame to the number of pins knocked down', async(() => {
       appComponent.isFirstRoll = false;
       appComponent.setSecondRoll(9);
-      expect(appComponent.bowl.frames[0].secondRoll).toBe(9);
+      expect(appComponent.bowlingRound.frames[0].secondRoll).toBe(9);
     }));
 
     it('should set isFirstRoll to true after first roll is finished', async(() => {
@@ -146,9 +146,9 @@ describe('AppComponent', () => {
 
   describe('incrementFrame', () => {
     it('should call resetPinButtonState', async(() => {
-      spyOn(appComponent.bowl, 'resetPinButtonState');
+      spyOn(appComponent.bowlingRound, 'resetPinButtonState');
       appComponent.incrementFrame();
-      expect(appComponent.bowl.resetPinButtonState).toHaveBeenCalled();
+      expect(appComponent.bowlingRound.resetPinButtonState).toHaveBeenCalled();
     }));
 
     it('should set isFirstRoll to true after first roll is finished', async(() => {
@@ -160,43 +160,43 @@ describe('AppComponent', () => {
   describe('handleTenthFrame', () => {
     it('should set 10th frame first roll to pinsknocked down', async(() => {
       appComponent.handleTenthFrame(5);
-      expect(appComponent.bowl.frames[9].firstRoll).toBe(5);
+      expect(appComponent.bowlingRound.frames[9].firstRoll).toBe(5);
     }));
     it('should set 10th frame second roll to pinsknocked down', async(() => {
-      appComponent.bowl.frames[9].firstRoll = 5;
+      appComponent.bowlingRound.frames[9].firstRoll = 5;
       appComponent.handleTenthFrame(5);
-      expect(appComponent.bowl.frames[9].secondRoll).toBe(5);
+      expect(appComponent.bowlingRound.frames[9].secondRoll).toBe(5);
     }));
     it('should set 10th frame second roll to pinsknocked down', async(() => {
-      appComponent.bowl.frames[9].firstRoll = 5;
+      appComponent.bowlingRound.frames[9].firstRoll = 5;
       appComponent.handleTenthFrame(5);
-      expect(appComponent.bowl.frames[9].isThirdRollElligible).toBeTruthy('because we have a spare on the 10th frame');
+      expect(appComponent.bowlingRound.frames[9].isThirdRollElligible).toBeTruthy('because we have a spare on the 10th frame');
     }));
     it('should set 10th frame second roll to pinsknocked down', async(() => {
-      appComponent.bowl.frames[9].firstRoll = 10;
+      appComponent.bowlingRound.frames[9].firstRoll = 10;
       appComponent.handleTenthFrame(10);
-      expect(appComponent.bowl.frames[9].isThirdRollElligible).toBeTruthy('because we have a strike on the 10th frame');
+      expect(appComponent.bowlingRound.frames[9].isThirdRollElligible).toBeTruthy('because we have a strike on the 10th frame');
     }));
 
     it('should disable buttons and end game because a strike or spare was not thrown in 10th frame', async(() => {
-      appComponent.bowl.frames[9].firstRoll = 8;
-      spyOn(appComponent.bowl, 'disableAllPins');
+      appComponent.bowlingRound.frames[9].firstRoll = 8;
+      spyOn(appComponent.bowlingRound, 'disableAllPins');
       appComponent.handleTenthFrame(1);
-      expect(appComponent.bowl.disableAllPins).toHaveBeenCalled();
+      expect(appComponent.bowlingRound.disableAllPins).toHaveBeenCalled();
     }));
 
     it('should reset pin button state because we are third roll elligible in the 10th frame', async(() => {
-      appComponent.bowl.frames[9].firstRoll = 8;
-      spyOn(appComponent.bowl, 'resetPinButtonState');
+      appComponent.bowlingRound.frames[9].firstRoll = 8;
+      spyOn(appComponent.bowlingRound, 'resetPinButtonState');
       appComponent.handleTenthFrame(2);
-      expect(appComponent.bowl.resetPinButtonState).toHaveBeenCalled();
+      expect(appComponent.bowlingRound.resetPinButtonState).toHaveBeenCalled();
     }));
 
     it('should set 10th frame third roll to pinsknocked down', async(() => {
-      appComponent.bowl.frames[9].firstRoll = 10;
-      appComponent.bowl.frames[9].secondRoll = 10;
+      appComponent.bowlingRound.frames[9].firstRoll = 10;
+      appComponent.bowlingRound.frames[9].secondRoll = 10;
       appComponent.handleTenthFrame(10);
-      expect(appComponent.bowl.frames[9].thirdRoll).toBe(10, 'because we were third roll elligible and rolled a third shot');
+      expect(appComponent.bowlingRound.frames[9].thirdRoll).toBe(10, 'because we were third roll elligible and rolled a third shot');
     }));
   });
 });
