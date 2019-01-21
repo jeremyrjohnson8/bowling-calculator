@@ -11,3 +11,7 @@ To run the project locally, cd into the project directory and type `ng serve` or
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## View Hosted Version 
+
+Project is hosted using firebase, and accessible at https://bowling-calculator.firebaseapp.com/
+
